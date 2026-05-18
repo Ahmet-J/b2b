@@ -1,7 +1,39 @@
-echo "node_modules/
-.DS_Store
+cat > .gitignore << 'EOF'
+# Dependencies
+node_modules/
+my-project/node_modules/
+sourcing web app/node_modules/
+
+# Build outputs
 dist/
+build/
+.my-project/dist/
+
+# Environment files
 .env
-uploads/*.png
-uploads/*.jpg
-*.log" > .gitignore
+.env.local
+.env.production
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Uploads
+uploads/
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+# IDE
+.vscode/
+.idea/
+
+# Temp files
+*.tmp
+*.temp
+EOF

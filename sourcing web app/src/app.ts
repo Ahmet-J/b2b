@@ -24,9 +24,9 @@ import { errorHandler } from './middlewares/errorHandler';
 
 const app = express();
 const corsOptions ={
-    origin:'http://localhost:5174', 
-    credentials:true,            //access-control-allow-credentials:true
-    optionSuccessStatus:200
+   origin: process.env.FRONTEND_URL || 'http://localhost:5174',
+  credentials: true,
+  optionSuccessStatus: 200
 }
 
 
@@ -72,3 +72,5 @@ const PORT = config.PORT;
 server.listen(PORT, () => {
   console.log(`🚀 Server is running on port  ${PORT}`);
 });
+
+export default app;
