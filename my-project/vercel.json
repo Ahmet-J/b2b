@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "my-project/dist/**",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "my-project/dist"
+      }
+    },
+    {
+      "src": "sourcing web app/src/app.ts",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "sourcing web app/src/app.ts"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "my-project/dist/index.html"
+    }
+  ]
+}
