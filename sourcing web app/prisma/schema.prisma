@@ -1,0 +1,182 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = "postgresql://postgres:Axmed007@localhost:5432/sourcing_db"
+}
+
+model User {
+  email           String   @unique
+  password        String
+  name            String
+  phone           String
+  role            Role     @default(buyer)
+  isEmailVerified Boolean  @default(false)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  reviewsReceived Review[] @relation("Reviewee")
+  reviewsGiven    Review[] @relation("Reviewer")
+
+  @@map("users")
+}
+
+model Supplier {
+  name String @unique
+  Descriptionproduct String
+  factorybackground String
+  location String
+  categortId Int
+  category  Category @relation(fields: [categortId], references: [id])
+  verifiedStatus  Verification @default(PENDING)
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+  id              Int          @id @default(autoincrement())
+  is_deleted      Boolean      @default(false)
+  orders          Order[]      @relation("SupplierOrders")
+  products        Product[]
+  reviewsReceived Review[]     @relation("SupplierReviews")
+
+  @@map("suppliers")
+}
+
+model Category {
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  id          Int       @id @default(autoincrement())
+  is_deleted  Boolean   @default(false)
+  images      Json[]
+  products    Product[]
+  suppliers Supplier[]
+  @@map("categories")
+}
+
+model Product {
+  name           String
+  slug           String    @unique
+  sku            String?
+  description    String?
+  specifications String?
+  price          Float
+  currency       String    @default("USD")
+  minOrderQty    Int       @default(1)
+  stock          Int       @default(0)
+  isActive       Boolean   @default(true)
+  isFeatured     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  id             Int       @id @default(autoincrement())
+  supplierId     Int
+  categoryId     Int?
+  is_deleted     Boolean   @default(false)
+  images         Json[]
+  // inquiries      Inquiry[]
+  category       Category? @relation(fields: [categoryId], references: [id])
+  supplier       Supplier  @relation(fields: [supplierId], references: [id])
+
+  @@unique([supplierId, sku])
+  @@map("products")
+}
+
+model Inquiry {
+  id         Int           @id @default(autoincrement())
+ 
+  productId Int
+  message    String
+  quantity   Int?
+  status     InquiryStatus @default(PENDING)
+  email String
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  is_deleted Boolean       @default(false)
+
+
+  @@map("inquiries")
+}
+
+model Order {
+  orderNumber String      @unique
+  status      OrderStatus @default(PENDING)
+  totalAmount Float
+  currency    String      @default("USD")
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  id          Int         @id @default(autoincrement())
+  supplierId  Int
+  is_deleted  Boolean     @default(false)
+  items       Json[]
+  supplier    Supplier    @relation("SupplierOrders", fields: [supplierId], references: [id])
+  reviews     Review[]
+
+  @@map("orders")
+}
+
+model Review {
+  rating     Int
+  comment    String?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  id         Int       @id @default(autoincrement())
+  reviewerId Int
+  revieweeId Int
+  supplierId Int?
+  orderId    Int?
+  is_deleted Boolean   @default(false)
+  reviewname String    @unique
+  order      Order?    @relation(fields: [orderId], references: [id])
+  reviewee   User      @relation("Reviewee", fields: [revieweeId], references: [id])
+  reviewer   User      @relation("Reviewer", fields: [reviewerId], references: [id])
+  supplier   Supplier? @relation("SupplierReviews", fields: [supplierId], references: [id])
+
+  @@unique([reviewerId, orderId])
+  @@map("reviews")
+}
+
+model Setting {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  buyer
+  supplier
+  admin
+}
+
+enum Verification {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
+enum InquiryStatus {
+  PENDING
+   RESPONDED 
+  QUOTED
+  NEGOTIATING
+  ORDERED
+  CLOSED
+  EXPIRED
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}

@@ -1,0 +1,392 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ── Dragon Brand Colors ── */
+  --color-dragon-primary:        #d90429;
+  --color-dragon-primary-light:  #ef233c;
+  --color-dragon-primary-dark:   #b00322;
+  --color-dragon-secondary:      #2b2d42;
+  --color-dragon-secondary-light:#3a3d5c;
+  --color-dragon-secondary-dark: #1a1b2e;
+}
+
+/* ==================== CSS CUSTOM PROPERTIES ==================== */
+:root {
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.145 0 0);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: oklch(0.205 0 0);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.97 0 0);
+  --secondary-foreground: oklch(0.205 0 0);
+  --muted: oklch(0.97 0 0);
+  --muted-foreground: oklch(0.556 0 0);
+  --accent: oklch(0.97 0 0);
+  --accent-foreground: oklch(0.205 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.922 0 0);
+  --input: oklch(0.922 0 0);
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+
+  /* Dragon shorthand vars */
+  --dp:  #d90429;
+  --dpl: #ef233c;
+  --dpd: #b00322;
+  --ds:  #2b2d42;
+  --dsl: #3a3d5c;
+  --dsd: #1a1b2e;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.205 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.205 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.922 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.556 0 0);
+}
+
+/* ==================== BASE LAYER ==================== */
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #0a0a14;
+    color: #ffffff;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* ✅ FIX: allow horizontal scroll on mobile only when truly needed */
+    overflow-x: hidden;
+  }
+
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar        { width: 5px; }
+  ::-webkit-scrollbar-track  { background: #1a1b2e; }
+  ::-webkit-scrollbar-thumb  { background: #d90429; border-radius: 10px; }
+}
+
+/* ==================== GLASS MORPHISM ==================== */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(217, 4, 41, 0.5);
+  transform: translateY(-10px);
+  box-shadow: 0 30px 60px -20px rgba(217, 4, 41, 0.3);
+}
+
+/* ==================== MESH BACKGROUNDS ==================== */
+.mesh-bg-dark {
+  background:
+    radial-gradient(ellipse at 15% 15%, rgba(217, 4, 41, 0.15) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(43, 45, 66, 0.6)  0%, transparent 55%),
+    radial-gradient(ellipse at 50% 50%, rgba(217, 4, 41, 0.06) 0%, transparent 70%),
+    #0a0a14;
+}
+
+.mesh-bg-features {
+  background:
+    radial-gradient(ellipse at 10% 10%, rgba(217, 4, 41, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 90%, rgba(43, 45, 66, 0.4) 0%, transparent 50%),
+    #0f0f1a;
+}
+
+/* ==================== TEXT GRADIENTS ==================== */
+.text-gradient-red {
+  background: linear-gradient(135deg, #d90429 0%, #ef233c 35%, #ff6b81 65%, #d90429 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* ==================== PRODUCT CARDS ==================== */
+.product-card {
+  background: rgba(43, 45, 66, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: all 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.product-card:hover {
+  transform: translateY(-12px);
+  border-color: rgba(217, 4, 41, 0.5);
+  box-shadow: 0 30px 60px -20px rgba(217, 4, 41, 0.25);
+}
+.product-card:hover .product-image {
+  transform: scale(1.08);
+}
+.product-image {
+  transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* ==================== FILTER BUTTONS ==================== */
+.filter-btn {
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.filter-btn.active {
+  background: #d90429;
+  color: #ffffff;
+  box-shadow: 0 8px 25px rgba(217, 4, 41, 0.35);
+  border-color: #d90429;
+}
+.filter-btn:not(.active) {
+  background: rgba(255, 255, 255, 0.04);
+  color: #9ca3af;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+.filter-btn:not(.active):hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(217, 4, 41, 0.4);
+}
+
+/* ==================== CHAT WINDOW ==================== */
+.chat-container {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: bottom right;
+}
+.chat-container.closed {
+  opacity: 0;
+  transform: scale(0.85) translateY(20px);
+  pointer-events: none;
+  visibility: hidden;
+}
+.chat-container.open {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  pointer-events: all;
+  visibility: visible;
+}
+
+/* ==================== GLOWING BADGE ==================== */
+.badge-glow {
+  animation: badgeGlow 2.5s ease-in-out infinite;
+}
+@keyframes badgeGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(217, 4, 41, 0.4); }
+  50%       { box-shadow: 0 0 22px rgba(217, 4, 41, 0.8), 0 0 45px rgba(217, 4, 41, 0.3); }
+}
+
+/* ==================== STAT ITEMS ==================== */
+.stat-item {
+  animation: countUp 0.6s ease-out forwards;
+}
+@keyframes countUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ==================== ALL KEYFRAME ANIMATIONS ==================== */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+  25%       { transform: translateY(-25px) rotate(3deg) scale(1.02); }
+  50%       { transform: translateY(-15px) rotate(-2deg) scale(1.05); }
+  75%       { transform: translateY(-30px) rotate(1deg) scale(1.02); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50%       { transform: translateY(-20px) scale(1.03); }
+}
+@keyframes pulseRed {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(217, 4, 41, 0.4); }
+  50%       { box-shadow: 0 0 0 25px rgba(217, 4, 41, 0); }
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes shimmer {
+  0%   { background-position: -300% center; }
+  100% { background-position:  300% center; }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(217,4,41,0.3), 0 0 40px rgba(217,4,41,0.1); }
+  50%       { box-shadow: 0 0 35px rgba(217,4,41,0.6), 0 0 70px rgba(217,4,41,0.3); }
+}
+@keyframes borderPulse {
+  0%, 100% { border-color: rgba(217, 4, 41, 0.2); }
+  50%       { border-color: rgba(217, 4, 41, 0.8); }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to   { opacity: 1; transform: scale(1); }
+}
+@keyframes pingSlow {
+  0%       { transform: scale(1);   opacity: 1; }
+  75%, 100%{ transform: scale(1.5); opacity: 0; }
+}
+
+/* Animation utility classes */
+.animate-float         { animation: float 8s ease-in-out infinite; }
+.animate-float-delayed { animation: float 8s ease-in-out 2s infinite; }
+.animate-float-slow    { animation: float-slow 10s ease-in-out 4s infinite; }
+.animate-pulse-red     { animation: pulseRed 2s ease-in-out infinite; }
+.animate-slide-up      { animation: slideUp 0.6s ease-out; }
+.animate-shimmer       { background-size: 200% auto; animation: shimmer 3s ease-in-out infinite; }
+.animate-glow          { animation: glow 2s ease-in-out infinite; }
+.animate-border-pulse  { animation: borderPulse 3s ease-in-out infinite; }
+.animate-bounce-slow   { animation: bounce 3s infinite; }
+.animate-scale-in      { animation: scaleIn 0.5s ease-out; }
+.animate-ping-slow     { animation: pingSlow 2s cubic-bezier(0,0,0.2,1) infinite; }
+
+/* ==================== RESPONSIVE — MOBILE FIRST ==================== */
+/*
+  ✅ MUHIIM: Halkan KAMID NOQON KARO in aad ku darin
+     responsive overrides oo Tailwind classes dib u qoraysa.
+     Tailwind wuxuu si toos ah u maareeya:
+       sm: (640px+) md: (768px+) lg: (1024px+) xl: (1280px+)
+     
+     Waxaan halkan ku darno CUSTOM responsive styles
+     ee aan Tailwind classes ahayn kaliya.
+*/
+
+/* Touch targets - mobile accessibility */
+@media (max-width: 768px) {
+  /* Ensure tap targets are big enough */
+  .filter-btn {
+    min-height: 36px;
+    padding: 0.4rem 0.85rem;
+    font-size: 0.7rem;
+  }
+
+  /* Reduce hover animations on mobile (performance) */
+  .glass-card:hover {
+    transform: translateY(-5px);
+  }
+  .product-card:hover {
+    transform: translateY(-6px);
+  }
+
+  /* Chat window full-width on small screens */
+  .chat-container {
+    width: calc(100vw - 2rem) !important;
+    max-width: 360px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Extra small — make cards slightly more compact */
+  .product-card {
+    border-radius: 16px;
+  }
+  .glass-card {
+    border-radius: 1.25rem;
+  }
+
+  /* Stats row wraps nicely */
+  .stat-item p:first-child {
+    font-size: clamp(1.4rem, 6vw, 2rem);
+  }
+}
+
+/* ==================== REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
